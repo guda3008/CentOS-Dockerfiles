@@ -22,6 +22,24 @@ RUN chmod 755 /start.sh
 RUN chmod 755 /config_mysql.sh
 RUN /config_mysql.sh
 
-EXPOSE 3306
 
+RUN yum install -y openssh-server
+
+RUN useradd worker
+RUN echo 'worker:worker' |chpasswd
+RUN echo 'root:root' |chpasswd
+
+RUN /sbin/service sshd start
+RUN /sbin/service sshd stop
+
+RUN cd /home && wget https://projects.tigase.org/attachments/download/1406/tigase-server-5.2.1-b3461-dist-max.zip
+RUN tar zvxf tigase-server-5.2.1-b3461-dist-max.zip
+RUN mv tigase-server-5.2.1-b3461-dist-max.zip tigase
+RUN cd tigase
+RUN chmod u+x ./scripts/tigase.sh 
+
+
+EXPOSE 22
+EXPOSE 3306
+CMD ["/usr/sbin/sshd", "-D"]
 CMD ["/bin/bash", "/start.sh"]
