@@ -35,12 +35,7 @@ RUN /sbin/service sshd stop
 
 RUN cd /home 
 RUN wget https://projects.tigase.org/attachments/download/1406/tigase-server-5.2.1-b3461-dist-max.zip
-RUN tar zvxf tigase-server-5.2.1-b3461-dist-max.zip
-RUN mv tigase-server-5.2.1-b3461-dist-max.zip tigase
-RUN cd tigase
-RUN chmod u+x ./scripts/tigase.sh 
-RUN ./scripts/db-create-mysql.sh tigase tigase tigasedb root mysqlPassword localhost
-RUN ./scripts/tigase.sh start etc/tigase.conf
+
 
 EXPOSE 5222
 EXPOSE 22
