@@ -22,7 +22,8 @@ RUN chmod 755 /start.sh
 RUN chmod 755 /config_mysql.sh
 RUN /config_mysql.sh
 
-RUN yum install -y wget
+RUN yum -y install wget
+RUN yum -y install tar
 RUN yum install -y openssh-server
 
 RUN useradd worker
@@ -38,8 +39,10 @@ RUN tar zvxf tigase-server-5.2.1-b3461-dist-max.zip
 RUN mv tigase-server-5.2.1-b3461-dist-max.zip tigase
 RUN cd tigase
 RUN chmod u+x ./scripts/tigase.sh 
+RUN ./scripts/db-create-mysql.sh tigase tigase tigasedb root mysqlPassword localhost
+RUN ./scripts/tigase.sh start etc/tigase.conf
 
-
+EXPOSE 5222
 EXPOSE 22
 EXPOSE 3306
 CMD ["/usr/sbin/sshd", "-D"]
