@@ -10,7 +10,7 @@ MAINTAINER The CentOS Project <cloud-ops@centos.org>
 
 RUN yum -y update; yum clean all
 RUN yum -y install epel-release; yum clean all
-RUN yum -y install mysql-server mysql pwgen supervisor bash-completion psmisc net-tools; yum clean all
+RUN yum -y install wget mysql-server mysql pwgen supervisor bash-completion psmisc net-tools; yum clean all
 
 ADD ./start.sh /start.sh
 ADD ./config_mysql.sh /config_mysql.sh
